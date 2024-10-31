@@ -1,4 +1,3 @@
-// backend/index.js
 const express = require('express');
 const connectToDatabase = require('./db');
 const authRoutes = require('./routes/auth');
