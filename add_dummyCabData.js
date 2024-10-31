@@ -9,49 +9,56 @@ const cabData = [
         currentLocation: "Chandni Chowk, Delhi",
         vehicleType: "Sedan",
         vehicleNumber: "DL1ABC1234",
-        contactNumber: "98765 43210"
+        contactNumber: "98765 43210",
+        baseCostPerKm: 10 // Base rate per kilometer
     },
     {
         driverName: "Sita Verma",
         currentLocation: "Rohini Sector 7, Delhi",
         vehicleType: "Hatchback",
         vehicleNumber: "DL1XYZ5678",
-        contactNumber: "99876 54321"
+        contactNumber: "99876 54321",
+        baseCostPerKm: 8
     },
     {
         driverName: "Vikram Singh",
         currentLocation: "Connaught Place, Delhi",
         vehicleType: "SUV",
         vehicleNumber: "DL1PQR9101",
-        contactNumber: "98712 34567"
+        contactNumber: "98712 34567",
+        baseCostPerKm: 9
     },
     {
         driverName: "Aisha Khan",
         currentLocation: "Saket, Delhi",
         vehicleType: "Sedan",
         vehicleNumber: "DL1LMN1213",
-        contactNumber: "98765 67890"
+        contactNumber: "98765 67890",
+        baseCostPerKm: 10
     },
     {
         driverName: "Anil Gupta",
         currentLocation: "Lajpat Nagar, Delhi",
         vehicleType: "Minivan",
         vehicleNumber: "DL1STU1415",
-        contactNumber: "95678 12345"
+        contactNumber: "95678 12345",
+        baseCostPerKm: 9
     },
     {
         driverName: "Priya Desai",
         currentLocation: "Dwarka Sector 21, Delhi",
         vehicleType: "SUV",
         vehicleNumber: "DL1VWX1617",
-        contactNumber: "91234 56789"
+        contactNumber: "91234 56789",
+        baseCostPerKm: 8
     },
     {
         driverName: "Deepak Mehta",
         currentLocation: "Mayur Vihar, Delhi",
         vehicleType: "Hatchback",
         vehicleNumber: "DL1YZA1819",
-        contactNumber: "99887 65432"
+        contactNumber: "99887 65432",
+        baseCostPerKm: 10
     }
 ];
 
@@ -92,6 +99,10 @@ const insertCabData = async () => {
                 vehicleType: cab.vehicleType,
                 vehicleNumber: cab.vehicleNumber,
                 contactNumber: cab.contactNumber,
+                allowedSharing: true, // Initially allowing sharing
+                currentPassengerCount: 0, // Initially 0
+                targetLocations: [], // Initially empty
+                baseCostPerKm: cab.baseCostPerKm // Set the base cost
             });
         }
         await delay(1000); // Wait for 1 second between requests

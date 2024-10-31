@@ -1,15 +1,30 @@
-// backend/controllers/cabController.js
-const Cab = require('../models/Cab');
+const connectToDatabase = require('../db');
+const {ObjectId} = require('mongodb');
 
-const findNearestCab = async (location) => {
-    const cabs = await Cab.find();
-    // Basic distance calculation (assuming flat coordinates for simplicity)
-    const nearestCab = cabs.reduce((prev, curr) => {
-        const prevDistance = Math.sqrt(Math.pow(prev.location.x - location.x, 2) + Math.pow(prev.location.y - location.y, 2));
-        const currDistance = Math.sqrt(Math.pow(curr.location.x - location.x, 2) + Math.pow(curr.location.y - location.y, 2));
-        return currDistance < prevDistance ? curr : prev;
-    });
-    return nearestCab;
+const updatePassengerCount = async (req, res) => {
+    console.log("inside update passenger count");
+    const { cabId , newPassengerCount } = req.body;
+
+    try {
+        const db = await connectToDatabase();
+        const cab = await db.collection('cab_locations').findOne({ _id: new ObjectId(cabId) });
+
+
+        if (!cab) {
+            return res.status(404).json({ message: 'Cab not found' });
+        }
+
+        await db.collection('cab_locations').updateOne(
+            { _id: new ObjectId(cabId) },
+            { $set: { currentPassengerCount: newPassengerCount } }
+        );
+
+        res.status(200).json({ message: 'Passenger count updated', newPassengerCount });
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating passenger count', error });
+    }
 };
 
-module.exports = { findNearestCab };
+module.exports = {
+    updatePassengerCount,
+};

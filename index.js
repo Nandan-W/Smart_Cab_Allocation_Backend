@@ -3,8 +3,14 @@ const express = require('express');
 const connectToDatabase = require('./db');
 const authRoutes = require('./routes/auth');
 const searchRoutes = require('./routes/search');
+const cabRoutes = require('./routes/cab');
+const userHistoryRoutes = require('./routes/userHistory');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const http = require('http');
+const socketIo = require('socket.io');
+
+
 
 dotenv.config();
 
@@ -22,6 +28,10 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 // console.log("inside search route");
 app.use('/api/search', searchRoutes);
+
+app.use('/api/cab', cabRoutes);
+
+app.use('/api/userHistory', userHistoryRoutes);
 
 // 404 Route Handler
 app.use((req, res) => {
